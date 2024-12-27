@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:heading>
-        About Page
+        Home Page
     </x-slot:heading>
-    About
+    HOME
 </x-layout>
