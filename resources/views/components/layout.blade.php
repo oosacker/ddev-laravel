@@ -18,9 +18,9 @@
                             </div>
                             <div class="hidden md:block">
                                 <div class="ml-10 flex items-baseline space-x-4">
-                                    <x-navlink type="link" :active="request()->is('/')" href="/">Home</x-navlink>
-                                    <x-navlink type="link" :active="request()->is('about')" href="/about">About</x-navlink>
-                                    <x-navlink type="link" :active="request()->is('contact')" href="/contact">Contact</x-navlink>
+                                    <x-navlink :active="request()->is('/')" href="/">Home</x-navlink>
+                                    <x-navlink :active="request()->is('jobs')" href="/jobs">Jobs</x-navlink>
+                                    <x-navlink :active="request()->is('contact')" href="/contact">Contact</x-navlink>
                                 </div>
                             </div>
                         </div>
