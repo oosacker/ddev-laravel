@@ -20,8 +20,10 @@ Route::get('/jobs/{id}', function ($id) {
 });
 
 Route::get('/jobs', function () {
-    $jobs = Job::with('employer')->paginate(10); // Eager loading
     // $jobs = Job::all(); // lazy loading
+    // $jobs = Job::with('employer')->paginate(10); // Eager loading
+    // $jobs = Job::with('employer')->simplePaginate(10); // Show only next and previous links
+    $jobs = Job::with('employer')->cursorPaginate(10); // Cursor pagination for large datasets
 
     return view('jobs', [
         'jobs' => $jobs
