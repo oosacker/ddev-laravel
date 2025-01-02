@@ -20,7 +20,7 @@ Route::get('/jobs/{id}', function ($id) {
 });
 
 Route::get('/jobs', function () {
-    $jobs = Job::with('employer')->get(); // Eager loading
+    $jobs = Job::with('employer')->paginate(10); // Eager loading
     // $jobs = Job::all(); // lazy loading
 
     return view('jobs', [
