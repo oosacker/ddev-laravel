@@ -24,7 +24,14 @@ Route::get('/jobs/{id}', function ($id) {
     ]);
 });
 
+// Create a new job
 Route::post('/jobs', function () {
+     // https://laravel.com/docs/11.x/validation#available-validation-rules
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'salary' => ['required']
+    ]);
+
     $request = request()->all();
 
     Job::create([

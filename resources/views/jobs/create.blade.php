@@ -16,7 +16,6 @@
                 </p>
 
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
                     <div class="sm:col-span-4">
                         <label for="title" class="block text-sm/6 font-medium text-gray-900">Title</label>
                         <div class="mt-2">
@@ -27,8 +26,13 @@
                                     id="title"
                                     class="block min-w-0 grow py-1.5 px-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
                                     placeholder="Shift leader"
+                                    required
                                 >
                             </div>
+
+                            @error('title')
+                                <p class="mt-1 text-red-600 text-sm/6">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
 
@@ -42,15 +46,31 @@
                                     id="salary"
                                     class="block min-w-0 grow py-1.5 px-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
                                     placeholder="$50,000"
+                                    required
                                 >
                             </div>
+
+                            @error('salary')
+                                <p class="mt-1 text-red-600 text-sm/6">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
-
                 </div>
-            </div>
 
+                {{-- <div class="mt-8">
+                    @if($errors->all())
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li class="text-red-600 italic">
+                                    {{ $error }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div> --}}
+            </div>
         </div>
+
         <div class="mt-6 flex items-center justify-end gap-x-6">
             <button
                 type="button"
