@@ -16,10 +16,20 @@ Route::get('/jobs/create', function () {
     return view('jobs.create');
 });
 
+// Show a single job
 Route::get('/jobs/{id}', function ($id) {
     $job = Job::find($id);
 
     return view('jobs.show', [
+        'job' => $job
+    ]);
+});
+
+// Edit job form
+Route::get('/jobs/{id}/edit', function ($id) {
+    $job = Job::find($id);
+
+    return view('jobs.edit', [
         'job' => $job
     ]);
 });
@@ -43,6 +53,7 @@ Route::post('/jobs', function () {
     return redirect('/jobs');
 });
 
+// Show all jobs
 Route::get('/jobs', function () {
     // $jobs = Job::all(); // lazy loading
     // $jobs = Job::with('employer')->paginate(10); // Eager loading
@@ -54,3 +65,21 @@ Route::get('/jobs', function () {
     ]);
 });
 
+// Update a job
+Route::patch('/jobs/{id}', function ($id) {
+    $job = Job::findOrFail($id);
+
+    $job->update([
+        'title' => request('title'),
+        'salary' => request('salary')
+    ]);
+
+    return redirect('/jobs/' . $job->id);
+});
+
+// Delete a job
+Route::delete('/jobs/{id}', function ($id) {
+    $job = Job::findOrFail($id)->delete();
+
+    return redirect('/jobs/');
+});
