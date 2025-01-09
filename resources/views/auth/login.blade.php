@@ -18,6 +18,7 @@
                                 name="email"
                                 id="email"
                                 required
+                                :value="old('email')"
                             />
                             <x-form-error name="email" />
                         </div>
@@ -31,6 +32,7 @@
                                 name="password"
                                 id="password"
                                 required
+                                :value="old('email')"
                             />
                             <x-form-error name="password" />
                         </div>
