@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Job;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use App\Models\User;
 
 class JobController extends Controller
 {
@@ -36,6 +39,13 @@ class JobController extends Controller
 
     public function edit(Job $job)
     {
+        // if (Auth::user()->can('edit-job', $job)) {
+        //     // ...
+        // }
+
+        // See def: AppServiceProvider
+        // Gate::authorize('edit-job', $job);
+
         return view('jobs.edit', [
             'job' => $job
         ]);
@@ -62,6 +72,8 @@ class JobController extends Controller
 
     public function update(Job $job)
     {
+        //Gate::authorize('edit-job', $job);
+
         // https://laravel.com/docs/11.x/validation#available-validation-rules
         request()->validate([
             'title' => ['required', 'min:3'],
@@ -78,6 +90,8 @@ class JobController extends Controller
 
     public function destroy(Job $job)
     {
+        //Gate::authorize('edit-job', $job);
+
         $job->delete();
 
         return redirect('/jobs/');

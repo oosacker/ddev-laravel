@@ -46,4 +46,4 @@ Thumbs.db
 # DDEV files (if using DDEV for local dev environment)
 .ddev/
 docker-compose.override.yml
-laravel.session.sql
+*.sql

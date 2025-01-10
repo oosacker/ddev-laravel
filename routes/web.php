@@ -18,36 +18,50 @@ Route::view('/contact', 'contact');
 //     Route::delete('/jobs/{job}', 'destroy');
 // });
 
-Route::resource('jobs', JobController::class, [
-    'only' => ['index', 'create', 'show', 'edit', 'store', 'update', 'destroy']
-]);
+// Route::resource('jobs', JobController::class, [
+//     'only' => ['index', 'create', 'show', 'edit', 'store', 'update', 'destroy']
+// ]);
 
-// // Show all jobs
-// Route::get('/jobs', [JobController::class, 'index']);
+// Route::resource('jobs', JobController::class)->only(['index', 'show'])->middleware('auth');
 
-// // Place before the wildcard route
-// Route::get('/jobs/create', [JobController::class, 'create']);
+// Show all jobs
+Route::get('/jobs', [JobController::class, 'index']);
 
-// // Show a single job
-// Route::get('/jobs/{job:id}', [JobController::class, 'show']);
+// Place before the wildcard route
+Route::get('/jobs/create', [JobController::class, 'create']);
 
-// // Edit job form
-// Route::get('/jobs/{job}/edit', [JobController::class, 'edit']);
+// Show a single job
+Route::get('/jobs/{job:id}', [JobController::class, 'show']);
 
-// // Create a new job
-// Route::post('/jobs', [JobController::class, 'store']);
+// Edit job form
+Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])
+    ->middleware('auth')
+    ->can('edit-job','job');
+// Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])
+//     ->middleware('auth')
+//     ->can('edit','job'); // Using the JobPolicy
 
-// // Update a job
-// Route::patch('/jobs/{job}', [JobController::class, 'update']);
+// Create a new job
+Route::post('/jobs', [JobController::class, 'store'])
+    ->middleware('auth');
 
-// // Delete a job
-// Route::delete('/jobs/{job}', [JobController::class, 'destroy']);
+// Update a job
+Route::patch('/jobs/{job}', [JobController::class, 'update'])
+    ->middleware('auth')
+    ->can('edit-job','job');
+
+// Delete a job
+Route::delete('/jobs/{job}', [JobController::class, 'destroy'])
+    ->middleware('auth')
+    ->can('edit-job','job');
 
 
 Route::get('/register', [RegisterUserController::class, 'create']);
 Route::post('/register', [RegisterUserController::class, 'store']);
 
-Route::get('/login', [SessionController::class, 'create']);
+// laravel.com/docs/master/routing#named-routes
+// Else gets blocked by the middleware
+Route::get('/login', [SessionController::class, 'create'])->name('login');
 Route::post('/login', [SessionController::class, 'store']);
 
 Route::post('/logout', [SessionController::class, 'destroy']);
