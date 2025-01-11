@@ -4,6 +4,20 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\SessionController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\JobPosted;
+use Illuminate\Support\Facades\Log;
+
+// Route::get('/job-posted', function () {
+//     try {
+//         Mail::to('oosacker@gmail.com')->send(new JobPosted());
+//         //Log::info('Email sent to oosacker@gmail.com');
+//         return 'Email sent';
+//     } catch (\Exception $e) {
+//         Log::error('Failed to send email: ' . $e->getMessage());
+//         return 'Failed to send email';
+//     }
+// });
 
 Route::view('/', 'home');
 Route::view('/contact', 'contact');
