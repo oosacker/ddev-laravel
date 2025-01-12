@@ -7,6 +7,8 @@ use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\JobPosted;
 use Illuminate\Support\Facades\Log;
+use App\Models\Job;
+use App\Jobs\TranslateJob;
 
 // Route::get('/job-posted', function () {
 //     try {
@@ -18,6 +20,27 @@ use Illuminate\Support\Facades\Log;
 //         return 'Failed to send email';
 //     }
 // });
+
+Route::get('closure', function() {
+    // Run a job in the background
+    // Delay the job by 5 seconds
+    // artisan queue:work
+    dispatch(function() {
+        Log::info('Hello from the queue');
+    })->delay(5);
+
+    return 'Job dispatched';
+});
+
+
+Route::get('translate', function() {
+    $job = Job::first();
+
+    // Pass the Job object to the queued job
+    TranslateJob::dispatch($job);
+
+    return 'Job dispatched';
+});
 
 Route::view('/', 'home');
 Route::view('/contact', 'contact');
