@@ -13,7 +13,8 @@
                     {{ $job->employer->name }}
                 </div>
 
-                <strong>{{ $job['title'] }}</strong>: {{ $job['salary'] }}
+                {{-- Custom text color from tailwind.config.js --}}
+                <strong class="text-laracasts">{{ $job['title'] }}</strong>: {{ $job['salary'] }}
             </a>
         @endforeach
     </div>
