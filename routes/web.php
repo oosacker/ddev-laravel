@@ -1,14 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\SessionController;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\JobPosted;
-use Illuminate\Support\Facades\Log;
-use App\Models\Job;
 use App\Jobs\TranslateJob;
+use App\Mail\JobPosted;
+use App\Models\Job;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 
 // Route::get('/job-posted', function () {
 //     try {
@@ -21,11 +22,11 @@ use App\Jobs\TranslateJob;
 //     }
 // });
 
-Route::get('closure', function() {
+Route::get('closure', function () {
     // Run a job in the background
     // Delay the job by 5 seconds
     // artisan queue:work
-    dispatch(function() {
+    dispatch(function () {
         Log::info('Hello from the queue');
     })->delay(5);
 
@@ -33,7 +34,7 @@ Route::get('closure', function() {
 });
 
 
-Route::get('translate', function() {
+Route::get('translate', function () {
     $job = Job::first();
 
     // Pass the Job object to the queued job
@@ -43,7 +44,11 @@ Route::get('translate', function() {
 });
 
 Route::view('/', 'home');
-Route::view('/contact', 'contact');
+// Route::view('/contact', 'contact');
+// use App\Http\Controllers\ContactController;
+
+Route::get('/contact', [ContactController::class, 'show']);
+Route::post('/contact', [ContactController::class, 'submit']);
 
 // Route::controller(JobController::class)->group(function () {
 //     Route::get('/jobs', 'index');
@@ -73,7 +78,7 @@ Route::get('/jobs/{job:id}', [JobController::class, 'show']);
 // Edit job form
 Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])
     ->middleware('auth')
-    ->can('edit-job','job');
+    ->can('edit-job', 'job');
 // Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])
 //     ->middleware('auth')
 //     ->can('edit','job'); // Using the JobPolicy
@@ -85,12 +90,12 @@ Route::post('/jobs', [JobController::class, 'store'])
 // Update a job
 Route::patch('/jobs/{job}', [JobController::class, 'update'])
     ->middleware('auth')
-    ->can('edit-job','job');
+    ->can('edit-job', 'job');
 
 // Delete a job
 Route::delete('/jobs/{job}', [JobController::class, 'destroy'])
     ->middleware('auth')
-    ->can('edit-job','job');
+    ->can('edit-job', 'job');
 
 
 Route::get('/register', [RegisterUserController::class, 'create']);
@@ -102,5 +107,3 @@ Route::get('/login', [SessionController::class, 'create'])->name('login');
 Route::post('/login', [SessionController::class, 'store']);
 
 Route::post('/logout', [SessionController::class, 'destroy']);
-
-
