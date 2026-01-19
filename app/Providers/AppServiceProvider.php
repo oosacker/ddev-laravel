@@ -24,8 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Model::preventLazyLoading();
-        // Paginator::useBootstrapFive(); // Use Bootstrap 5 pagination
+        // Model::preventLazyLoading();
+        Paginator::useTailwind(); // Use Tailwind pagination
 
         Gate::define('edit-job', function (User $user = null, Job $job) {
             return $job->employer->user->is($user);

@@ -14,13 +14,14 @@ class JobController extends Controller
 {
     public function index()
     {
-        // $jobs = Job::all(); // lazy loading
-        // $jobs = Job::with('employer')->paginate(10); // Eager loading
+        // $jobs = Job::all(); // lazy loading (see: Model::preventLazyLoading() to disable)
         // $jobs = Job::with('employer')->simplePaginate(10); // Show only next and previous links
+        // $jobs = Job::with('employer')->latest()->cursorPaginate(10); // Cursor pagination for large datasets
 
         $jobs = Job::with('employer')
             ->latest()
-            ->cursorPaginate(10); // Cursor pagination for large datasets
+            // ->cursorPaginate(10);
+            ->paginate(10); // Eager loading with standard pagination
 
         return view('jobs.index', [
             'jobs' => $jobs
