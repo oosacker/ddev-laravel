@@ -27,7 +27,8 @@ class AppServiceProvider extends ServiceProvider
         // Model::preventLazyLoading();
         Paginator::useTailwind(); // Use Tailwind pagination
 
-        Gate::define('edit-job', function (User $user = null, Job $job) {
+        // Gates are a way to authorize actions based on user permissions.
+        Gate::define('edit-job', function (?User $user, Job $job) {
             return $job->employer->user->is($user);
         });
     }

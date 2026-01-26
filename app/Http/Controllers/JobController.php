@@ -64,10 +64,16 @@ class JobController extends Controller
 
         $request = request()->all();
 
+        $user = Auth::user();
+
+        $employer = $user->employer ?: $user->employer()->create([
+            'name' => trim($user->first_name . ' ' . $user->last_name) ?: $user->email,
+        ]);
+
         $job = Job::create([
             'title' => $request['title'],
             'salary' => $request['salary'],
-            'employer_id' => 1
+            'employer_id' => $employer->id
         ]);
 
         // Add job to the queue
